@@ -6,7 +6,7 @@
 /*   By: smaegan <smaegan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 18:58:58 by smaegan           #+#    #+#             */
-/*   Updated: 2022/03/17 18:32:30 by smaegan          ###   ########.fr       */
+/*   Updated: 2022/03/17 19:34:35 by smaegan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,22 @@ void	init_pm(t_PM *pm)
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_PM	pm;
 	int		fd;
 	int		i;
+	char	*ber;
 
-	i = 0;
+	if (argc != 2)
+		return (write(1, "Map error\n", 10));
 	pm.mlx = mlx_init();
-	fd = open("map.ber", O_RDONLY);
-	if (fd <= 0)
-		return (1);
+	ber = ft_substr(argv[1], ft_strlen(argv[1]) - 4, 4);
+	i = ft_strncmp(ber, ".ber", 4);
+	free(ber);
+	fd = open(argv[1], O_RDONLY);
+	if (fd <= 0 || i != 0)
+		return (write(1, "Map error\n", 10));
 	map_load(fd, &pm);
 	close(fd);
 	if (map_check(pm))
@@ -100,6 +105,5 @@ int	main(void)
 	center_scrin_print(&pm);
 	mlx_key_hook(pm.w, key_handler, (void *) &pm);
 	mlx_hook(pm.w, 17, 0, exit_handler, &pm);
-	close(fd);
 	mlx_loop(pm.mlx);
 }
