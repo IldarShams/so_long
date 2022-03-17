@@ -11,7 +11,6 @@ CFLAGS  =   -Wall -Wextra -Werror -I $(HEADER)
 .PHONY  :   all clean fclean re gnl 
 all	:   $(NAME)
 $(NAME) : ${OBJ} ${HEADER} ${GNL} ${LIBFT} ${LIBMLX}
-	cd ./Libft && make -f Makefile2
 	gcc $(CFLAGS) get_next_line*.o ${OBJ} -o $(NAME) -L. -lft -L. -lmlx -framework OpenGL -framework AppKit
 %.o : %.c ${HEADER}
 	gcc $(CFLAGS) -c $< -o $@
@@ -27,5 +26,5 @@ ${GNL}:
 ${LIBMLX}:
 	cd ./minilibx_mms_20200219 && make -f Makefile1 && mv libmlx.dylib ./..
 ${LIBFT}:
-	cd ./Libft && make -f Makefile2 && mv ${LIBFT} ./..
+	cd ./Libft && make -f Makefile2 && mv libft.a ./..
 re      :   fclean all
