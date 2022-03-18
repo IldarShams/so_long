@@ -6,7 +6,7 @@
 /*   By: smaegan <smaegan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 18:48:17 by smaegan           #+#    #+#             */
-/*   Updated: 2022/03/17 18:30:26 by smaegan          ###   ########.fr       */
+/*   Updated: 2022/03/18 14:27:02 by smaegan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_xyij
 	int	j;
 }	t_xyij;
 
+void	init(t_PM *pm);
 void	free_map(char **m);
 void	show_map(char **m);
 int		copy(char **m, char **temp);
@@ -60,5 +61,6 @@ void	center_scrin_print(t_PM *pm);
 void	put_img(t_PM *pm, t_xyij xyij);
 void	init_pm(t_PM *pm);
 int		invalid_symbol_check(char *line);
+int		map_square_check(t_PM pm);
 
 #endif

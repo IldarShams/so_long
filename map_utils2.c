@@ -6,7 +6,7 @@
 /*   By: smaegan <smaegan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:10:37 by smaegan           #+#    #+#             */
-/*   Updated: 2022/03/17 18:27:47 by smaegan          ###   ########.fr       */
+/*   Updated: 2022/03/18 14:21:03 by smaegan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	map_check(t_PM pm)
 	int	j;
 
 	i = -1;
-	while (pm.map != NULL && pm.map[++i] != NULL)
+	while (pm.map != NULL && pm.map[++i] != NULL && map_square_check(pm))
 	{
 		j = 0;
 		if (((i == 0 || pm.map[i + 1] == NULL)
@@ -65,4 +65,22 @@ int	invalid_symbol_check(char *line)
 		i++;
 	}
 	return (0);
+}
+
+int	map_square_check(t_PM pm)
+{
+	int		i;
+	size_t	lenght;
+
+	i = 0;
+	if (pm.map == NULL)
+		return (0);
+	lenght = ft_strlen(pm.map[0]);
+	while (pm.map[i] != NULL)
+	{
+		if (ft_strlen(pm.map[i]) != lenght)
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: smaegan <smaegan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 18:58:58 by smaegan           #+#    #+#             */
-/*   Updated: 2022/03/17 19:34:35 by smaegan          ###   ########.fr       */
+/*   Updated: 2022/03/18 14:27:51 by smaegan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,14 @@ void	init_pm(t_PM *pm)
 	}
 }
 
+void	init(t_PM *pm)
+{
+	init_pm(pm);
+	pm->mlx = mlx_init();
+	pm->w = window_init(pm->mlx, pm->map);
+	pm->img = images_load(pm->mlx);
+}
+
 int	main(int argc, char **argv)
 {
 	t_PM	pm;
@@ -88,7 +96,6 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (write(1, "Map error\n", 10));
-	pm.mlx = mlx_init();
 	ber = ft_substr(argv[1], ft_strlen(argv[1]) - 4, 4);
 	i = ft_strncmp(ber, ".ber", 4);
 	free(ber);
@@ -98,10 +105,11 @@ int	main(int argc, char **argv)
 	map_load(fd, &pm);
 	close(fd);
 	if (map_check(pm))
+	{
+		free_map(pm.map);
 		return (write(1, "Map error\n", 10));
-	init_pm(&pm);
-	pm.w = window_init(pm.mlx, pm.map);
-	pm.img = images_load(pm.mlx);
+	}
+	init(&pm);
 	center_scrin_print(&pm);
 	mlx_key_hook(pm.w, key_handler, (void *) &pm);
 	mlx_hook(pm.w, 17, 0, exit_handler, &pm);
